@@ -69,3 +69,7 @@ async def preview(uid: str):
     video_files = list(VID_DIR.glob(f"{uid}_*"))
     video_path = f"/static/videos/{video_files[0].name}" if video_files else ""
     return HTMLResponse(Path("templates/preview.html").read_text().replace("{{VIDEO_PATH}}", video_path).replace("{{SUB_PATH}}", f"/download/{uid}.vtt"))
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
