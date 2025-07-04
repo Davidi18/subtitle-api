@@ -1,13 +1,12 @@
-version: '3.8'
+version: '3'
 
 services:
-  subtitles:
+  subtitle-api:
     build: .
-    container_name: subtitles
     ports:
-      - "8000:8000"  # זה הכי חשוב! פותח את הפורט מבחוץ
+      - "8080:8000"
     networks:
-      - traefik
+      - coolify
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.subtitles.rule=Host(`subtitles.strudel.marketing`)"
@@ -16,5 +15,5 @@ services:
       - "traefik.http.services.subtitles.loadbalancer.server.port=8000"
 
 networks:
-  traefik:
+  coolify:
     external: true
