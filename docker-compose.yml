@@ -1,14 +1,19 @@
-version: '3'
+version: '3.8'
 
 services:
-  subtitle-api:
+  subtitles:
     build: .
+    container_name: subtitles
     ports:
-      - "8000:8000"
+      - "8000:8000"  # זה הכי חשוב! פותח את הפורט מבחוץ
     networks:
       - traefik
-    volumes:
-      - .:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.subtitles.rule=Host(`subtitles.strudel.marketing`)"
+      - "traefik.http.routers.subtitles.entrypoints=websecure"
+      - "traefik.http.routers.subtitles.tls.certresolver=letsencrypt"
+      - "traefik.http.services.subtitles.loadbalancer.server.port=8000"
 
 networks:
   traefik:
